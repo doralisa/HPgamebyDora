@@ -161,6 +161,11 @@ public class GamePlay {
                 break;
         }
         System.out.println("\t Te ha escogido la " + wand.getName() + " que te añade " + wand.getPower() + " puntos de poder al atacar." + "\n");
+        if (playerOne instanceof Wizard){
+            ((Wizard) playerOne).setWand(wand);
+        } else if (playerTwo instanceof Wizard){
+            ((Wizard) playerTwo).setWand(wand);
+        }
         return wand;
     }
 
@@ -453,7 +458,7 @@ public class GamePlay {
         } else {
             System.out.println("Elija un hechizo: ");
             for (int i = 0; i < attackSpells.size(); i++) {
-                System.out.println((i + 1) + ") " + attackSpells.get(i).getName() + attackSpells.get(i).getDamage() + " de daño, y" + attackSpells.get(i).getMagicPower() + " energia magica requerida.");
+                System.out.println((i + 1) + ") " + attackSpells.get(i).getName() + " " + attackSpells.get(i).getDamage() + "  de daño, y  " + attackSpells.get(i).getMagicPower() + "   energia magica requerida.");
             }
         }
 
@@ -483,7 +488,7 @@ public class GamePlay {
             if (playerInTurn instanceof Wizard) {
                 Wand wand = ((Wizard) playerInTurn).getWand();
                 System.out.println("Se te sumaran 10 puntos a tu ataque por ser un Mago Oscuro, mas " + wand.getPower() + " puntos por tu varita " + wand.getName() + "\n");
-                opponent.receiveAttack(spell.getDamage() + 10 + wand.getPower(), position);
+                opponent.receiveAttack(spell.getDamage() + 10 + ((Wizard) playerInTurn).getWand().getPower(), position);
             } else { //Por si es un elfo
                 System.out.println("Se te suman 5 puntos a tu ataque por ser un Elfo libre!");
                 opponent.receiveAttack(spell.getDamage() + 5, position); //TODO: REVISAR ESTE METODO NO ESTA DEVOLVIENDO LO QUE DEBE
@@ -510,7 +515,7 @@ public class GamePlay {
 
             System.out.println("Elija un hechizo: ");
             for (int i = 0; i < healingSpells.size(); i++) {
-                System.out.println((i + 1) + ") " + healingSpells.get(i).getName() + healingSpells.get(i).getRecovery() + " de sanacion, y" + healingSpells.get(i).getMagicPower() + " energia magica requerida.");
+                System.out.println((i + 1) + ") " + healingSpells.get(i).getName() + " " + healingSpells.get(i).getRecovery() + " de sanacion, y " + healingSpells.get(i).getMagicPower() + " energia magica requerida.");
             }
 
             //Recordar que los puntos de vida no pueden superar los 100 puntos
@@ -547,7 +552,7 @@ public class GamePlay {
         Set<Spell> spells = playerInTurn.getSpellSet();
         int counter = 0;
         for (Spell spell : spells) {
-            if (spell instanceof HealingSpell) {
+            if (spell instanceof RecoverySpell) {
                 recoverySpells.add(spell);
                 counter++;
             }
@@ -558,13 +563,13 @@ public class GamePlay {
 
             System.out.println("Elija un hechizo: ");
             for (int i = 0; i < recoverySpells.size(); i++) {
-                System.out.println((i + 1) + ") " + recoverySpells.get(i).getName() + recoverySpells.get(i).getRecovery() + " de sanacion, y" + recoverySpells.get(i).getMagicPower() + " energia magica requerida.");
+                System.out.println((i + 1) + ") " + recoverySpells.get(i).getName() + " " + recoverySpells.get(i).getRecovery() + " de sanacion, y " + recoverySpells.get(i).getMagicPower() + " energia magica requerida.");
             }
             //Recordar que los puntos de energia magica no pueden superar los 100 puntos
-            RecoverySpell spell = null;
+            Spell spell = null;
             int option = keyboard.nextInt();
             if (option <= recoverySpells.size() + 1) {
-                spell = (RecoverySpell) recoverySpells.get(option - 1); //SE HIZO UN CASTEO PARA QUE NO ME DE ERROR AL CAMBIAR EL TIPO DE DATO QUE ES SPELL
+                spell = recoverySpells.get(option - 1); //SE HIZO UN CASTEO PARA QUE NO ME DE ERROR AL CAMBIAR EL TIPO DE DATO QUE ES SPELL
             }
             if (playerInTurn.magicEnergy < spell.getMagicPower()) {
                 if (playerInTurn.magicEnergy < 0) {

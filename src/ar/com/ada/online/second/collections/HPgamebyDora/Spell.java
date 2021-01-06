@@ -7,6 +7,7 @@ public class Spell {
     protected Integer damage;
     protected Integer recovery;
     protected Integer magicPower;
+    protected Integer magicPowerRecoverySpell;
 
     public Spell() {
     }
@@ -41,6 +42,14 @@ public class Spell {
 
     public void setMagicPower(Integer magicPower) {
         this.magicPower = magicPower;
+    }
+
+    public Integer getMagicPowerRecoverySpell() {
+        return magicPowerRecoverySpell;
+    }
+
+    public void setMagicPowerRecoverySpell(Integer magicPowerRecoverySpell) {
+        this.magicPowerRecoverySpell = magicPowerRecoverySpell;
     }
 
     @Override
