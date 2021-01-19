@@ -65,10 +65,6 @@ public abstract class Character {
         return life; //No se si retorna o no
     }
 
-    public void recoverYourself(Integer magicPower) {
-        magicEnergy -= magicPower;
-    }
-
     public void receiveAttack(Integer damage, char position) {
         if (position == getLocation()) {
             this.life = this.life - damage;
